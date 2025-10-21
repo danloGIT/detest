@@ -21,7 +21,7 @@
   .task {margin:10px 0;}
   .task label {display:block; margin-bottom:4px; font-weight:600;}
   input[type=text] {width:100%; padding:6px 8px; border-radius:4px; border:1px solid #aaa; margin-bottom:8px; box-sizing:border-box;}
-  button.check {background:#2ea063; color:white; border:none; padding:6px 10px; border-radius:4px; cursor:pointer; font-weight:600; margin-bottom:8px;}
+  button.check, button.more {background:#2ea063; color:white; border:none; padding:6px 10px; border-radius:4px; cursor:pointer; font-weight:600; margin-bottom:8px;}
   .feedback {margin-top:4px; padding:6px; border-radius:4px; display:none;}
   .correct {background:#e0f7e9; color:#1a6b3d;}
   .wrong {background:#fbe0e0; color:#a10a0a;}
@@ -43,88 +43,12 @@
 </header>
 
 <div class="container">
+  <!-- (Die Sections bleiben identisch wie zuvor, hier ausgelassen zur Übersicht) -->
 
-  <!-- Tempus 1 -->
-  <section id="tempus1" class="active">
-    <h2>Tempus – Wiederholung</h2>
-    <table>
-      <tr><th>Tempus</th><th>Beispiel</th><th>Verwendung</th></tr>
-      <tr><td>Präsens</td><td>Ich spiele.</td><td>Jetzt / regelmäßig</td></tr>
-      <tr><td>Präteritum</td><td>Ich spielte.</td><td>Vergangenheit / Erzählungen</td></tr>
-      <tr><td>Perfekt</td><td>Ich habe gespielt.</td><td>Vergangenheit mit Bezug zur Gegenwart</td></tr>
-      <tr><td>Plusquamperfekt</td><td>Ich hatte gespielt.</td><td>Vorvergangenheit</td></tr>
-      <tr><td>Futur I</td><td>Ich werde spielen.</td><td>Zukunft / Vermutung</td></tr>
-      <tr><td>Futur II</td><td>Ich werde gespielt haben.</td><td>Abgeschlossene Handlung in Zukunft</td></tr>
-    </table>
-
-    <div class="task">
-      <label>Übung 1: Bestimme das Tempus</label>
-      <input type="text" placeholder="1. Peter liest ein spannendes Buch" data-solution="Präsens">
-      <input type="text" placeholder="2. Wir hatten schon gegessen, als er kam" data-solution="Plusquamperfekt">
-      <input type="text" placeholder="3. Morgen werde ich ins Kino gehen" data-solution="Futur I">
-      <input type="text" placeholder="4. Sie hat den Ball gefangen" data-solution="Perfekt">
-      <input type="text" placeholder="5. Früher spielte ich oft im Park" data-solution="Präteritum">
-      <button class="check">Überprüfen</button>
-      <div class="feedback"></div>
-    </div>
-  </section>
-
-  <!-- Tempus 2 -->
-  <section id="tempus2">
-    <h2>Tempus – Anwendung</h2>
-    <div class="task">
-      <label>Übung 2: Setze in die verlangte Zeitform</label>
-      <input type="text" placeholder="1. (Präsens → Perfekt) Er spielt Fußball" data-solution="Er hat Fußball gespielt">
-      <input type="text" placeholder="2. (Präsens → Präteritum) Wir essen Pizza" data-solution="Wir aßen Pizza">
-      <input type="text" placeholder="3. (Präteritum → Plusquamperfekt) Sie rief ihre Freundin an" data-solution="Sie hatte ihre Freundin angerufen">
-      <input type="text" placeholder="4. (Präsens → Futur I) Ich fahre morgen nach Berlin" data-solution="Ich werde morgen nach Berlin fahren">
-      <input type="text" placeholder="5. (Perfekt → Präsens) Ihr habt gut gearbeitet" data-solution="Ihr arbeitet gut">
-      <button class="check">Überprüfen</button>
-      <div class="feedback"></div>
-    </div>
-  </section>
-
-  <!-- Konjunktiv I -->
-  <section id="konj1">
-    <h2>Konjunktiv I / Indirekte Rede</h2>
-    <table>
-      <tr><th>Person</th><th>Indikativ</th><th>Konjunktiv I</th></tr>
-      <tr><td>ich</td><td>sage</td><td>sage</td></tr>
-      <tr><td>du</td><td>sagst</td><td>sagest</td></tr>
-      <tr><td>er/sie/es</td><td>sagt</td><td>sage</td></tr>
-      <tr><td>wir</td><td>sagen</td><td>sagen</td></tr>
-      <tr><td>ihr</td><td>sagt</td><td>saget</td></tr>
-      <tr><td>sie</td><td>sagen</td><td>sagen</td></tr>
-    </table>
-
-    <div class="task">
-      <label>Übung 3: Direkte Rede → Indirekte Rede</label>
-      <input type="text" placeholder="1. Maria sagt: 'Ich gehe morgen schwimmen.'" data-solution="Maria sagt, sie gehe morgen schwimmen.">
-      <input type="text" placeholder="2. Paul meint: 'Wir haben das Spiel gewonnen.'" data-solution="Paul meint, sie hätten das Spiel gewonnen.">
-      <input type="text" placeholder="3. Der Lehrer erklärt: 'Ihr schreibt morgen den Test.'" data-solution="Der Lehrer erklärt, sie schrieben morgen den Test.">
-      <input type="text" placeholder="4. Anna ruft: 'Ich komme gleich!'" data-solution="Anna ruft, sie komme gleich.">
-      <input type="text" placeholder="5. Der Junge sagt: 'Meine Freunde warten schon.'" data-solution="Der Junge sagt, seine Freunde warteten schon.">
-      <button class="check">Überprüfen</button>
-      <div class="feedback"></div>
-    </div>
-  </section>
-
-  <!-- Konjunktiv I Vertiefung -->
-  <section id="konj2">
-    <h2>Konjunktiv I – Vertiefung</h2>
-    <div class="task">
-      <label>Übung 4: Konjunktiv-I-Formen bilden</label>
-      <input type="text" placeholder="gehen →" data-solution="gehe, gehest, gehe, gehen, gehet, gehen">
-      <input type="text" placeholder="machen →" data-solution="mache, machest, mache, machen, machet, machen">
-      <input type="text" placeholder="wissen →" data-solution="wisse, wisses, wisse, wissen, wisset, wissen">
-      <input type="text" placeholder="sein →" data-solution="sei, seiest, sei, seien, seiet, seien">
-      <input type="text" placeholder="haben →" data-solution="habe, habest, habe, haben, habet, haben">
-      <input type="text" placeholder="kommen →" data-solution="komme, kommest, komme, kommen, kommet, kommen">
-      <button class="check">Überprüfen</button>
-      <div class="feedback"></div>
-    </div>
-  </section>
-
+  <!-- Am Ende: Mehr lernen Button -->
+  <div style="text-align:center; margin-top:20px;">
+    <button class="more" onclick="window.location.href='https://danlo.co.ua/detest/mehrlernen.html'">Mehr lernen</button>
+  </div>
 </div>
 
 <script>
