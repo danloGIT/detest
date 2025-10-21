@@ -8,7 +8,7 @@
   body {font-family: Arial, sans-serif; margin:0; padding:0; background:#f0f2f5; color:#111;}
   header {background:#2b7ed3; color:white; padding:12px; position:sticky; top:0; z-index:100;}
   header h1 {margin:0; font-size:18px;}
-  nav {margin-top:8px;}
+  nav {margin-top:8px; display:flex; gap:12px; flex-wrap:wrap;}
   select {padding:6px 10px; border-radius:4px; border:none; font-weight:600;}
   .container {max-width:900px; margin:12px auto; padding:0 12px;}
   section {display:none; background:#fffefa; padding:12px; border-radius:6px; border:1px solid #ccc; margin-bottom:16px;}
@@ -21,7 +21,7 @@
   .task {margin:10px 0;}
   .task label {display:block; margin-bottom:4px; font-weight:600;}
   input[type=text] {width:100%; padding:6px 8px; border-radius:4px; border:1px solid #aaa; margin-bottom:8px; box-sizing:border-box;}
-  button.check, button.more {background:#2ea063; color:white; border:none; padding:6px 10px; border-radius:4px; cursor:pointer; font-weight:600; margin-bottom:8px;}
+  button.check {background:#2ea063; color:white; border:none; padding:6px 10px; border-radius:4px; cursor:pointer; font-weight:600; margin-bottom:8px;}
   .feedback {margin-top:4px; padding:6px; border-radius:4px; display:none;}
   .correct {background:#e0f7e9; color:#1a6b3d;}
   .wrong {background:#fbe0e0; color:#a10a0a;}
@@ -39,25 +39,93 @@
       <option value="konj1">Konjunktiv I – Indirekte Rede</option>
       <option value="konj2">Konjunktiv I – Vertiefung</option>
     </select>
+
+    <!-- Neues Dropdown für Mehr lernen -->
+    <select id="moreLearnSelect">
+      <option value="">Mehr lernen …</option>
+      <option value="https://danlo.co.ua/detest/mehrlernen.html">Viel mehr Aufgaben</option>
+    </select>
   </nav>
 </header>
 
 <div class="container">
-  <!-- (Die Sections bleiben identisch wie zuvor, hier ausgelassen zur Übersicht) -->
 
-  <!-- Am Ende: Mehr lernen Button -->
-  <div style="text-align:center; margin-top:20px;">
-    <button class="more" onclick="window.location.href='https://danlo.co.ua/detest/mehrlernen.html'">Mehr lernen</button>
-  </div>
+  <!-- Sections bleiben identisch wie zuvor -->
+  <section id="tempus1" class="active">
+    <h2>Tempus – Wiederholung</h2>
+    <div class="task">
+      <label>Übung 1: Bestimme das Tempus</label>
+      <input type="text" placeholder="1. Peter liest ein spannendes Buch" data-solution="Präsens">
+      <input type="text" placeholder="2. Wir hatten schon gegessen, als er kam" data-solution="Plusquamperfekt">
+      <input type="text" placeholder="3. Morgen werde ich ins Kino gehen" data-solution="Futur I">
+      <input type="text" placeholder="4. Sie hat den Ball gefangen" data-solution="Perfekt">
+      <input type="text" placeholder="5. Früher spielte ich oft im Park" data-solution="Präteritum">
+      <button class="check">Überprüfen</button>
+      <div class="feedback"></div>
+    </div>
+  </section>
+
+  <section id="tempus2">
+    <h2>Tempus – Anwendung</h2>
+    <div class="task">
+      <label>Übung 2: Setze in die verlangte Zeitform</label>
+      <input type="text" placeholder="1. (Präsens → Perfekt) Er spielt Fußball" data-solution="Er hat Fußball gespielt">
+      <input type="text" placeholder="2. (Präsens → Präteritum) Wir essen Pizza" data-solution="Wir aßen Pizza">
+      <input type="text" placeholder="3. (Präteritum → Plusquamperfekt) Sie rief ihre Freundin an" data-solution="Sie hatte ihre Freundin angerufen">
+      <input type="text" placeholder="4. (Präsens → Futur I) Ich fahre morgen nach Berlin" data-solution="Ich werde morgen nach Berlin fahren">
+      <input type="text" placeholder="5. (Perfekt → Präsens) Ihr habt gut gearbeitet" data-solution="Ihr arbeitet gut">
+      <button class="check">Überprüfen</button>
+      <div class="feedback"></div>
+    </div>
+  </section>
+
+  <section id="konj1">
+    <h2>Konjunktiv I / Indirekte Rede</h2>
+    <div class="task">
+      <label>Übung 3: Direkte Rede → Indirekte Rede</label>
+      <input type="text" placeholder="1. Maria sagt: 'Ich gehe morgen schwimmen.'" data-solution="Maria sagt, sie gehe morgen schwimmen.">
+      <input type="text" placeholder="2. Paul meint: 'Wir haben das Spiel gewonnen.'" data-solution="Paul meint, sie hätten das Spiel gewonnen.">
+      <input type="text" placeholder="3. Der Lehrer erklärt: 'Ihr schreibt morgen den Test.'" data-solution="Der Lehrer erklärt, sie schrieben morgen den Test.">
+      <input type="text" placeholder="4. Anna ruft: 'Ich komme gleich!'" data-solution="Anna ruft, sie komme gleich.">
+      <input type="text" placeholder="5. Der Junge sagt: 'Meine Freunde warten schon.'" data-solution="Der Junge sagt, seine Freunde warteten schon.">
+      <button class="check">Überprüfen</button>
+      <div class="feedback"></div>
+    </div>
+  </section>
+
+  <section id="konj2">
+    <h2>Konjunktiv I – Vertiefung</h2>
+    <div class="task">
+      <label>Übung 4: Konjunktiv-I-Formen bilden</label>
+      <input type="text" placeholder="gehen →" data-solution="gehe, gehest, gehe, gehen, gehet, gehen">
+      <input type="text" placeholder="machen →" data-solution="mache, machest, mache, machen, machet, machen">
+      <input type="text" placeholder="wissen →" data-solution="wisse, wisses, wisse, wissen, wisset, wissen">
+      <input type="text" placeholder="sein →" data-solution="sei, seiest, sei, seien, seiet, seien">
+      <input type="text" placeholder="haben →" data-solution="habe, habest, habe, haben, habet, haben">
+      <input type="text" placeholder="kommen →" data-solution="komme, kommest, komme, kommen, kommet, kommen">
+      <button class="check">Überprüfen</button>
+      <div class="feedback"></div>
+    </div>
+  </section>
+
 </div>
 
 <script>
-  // Dropdown Navigation
+  // Dropdown Navigation für Übungen
   const select = document.getElementById('exerciseSelect');
   const sections = document.querySelectorAll('section');
   select.addEventListener('change', ()=>{
     sections.forEach(s=>s.classList.remove('active'));
     document.getElementById(select.value).classList.add('active');
+  });
+
+  // Dropdown Navigation für Mehr lernen
+  const moreSelect = document.getElementById('moreLearnSelect');
+  moreSelect.addEventListener('change', ()=>{
+    if(moreSelect.value) {
+      window.open(moreSelect.value, '_blank');
+      moreSelect.value = ""; // zurücksetzen
+    }
   });
 
   // Antworten überprüfen
@@ -67,7 +135,7 @@
       const inputs = container.querySelectorAll('input[type=text]');
       const feedback = container.querySelector('.feedback');
       feedback.innerHTML='';
-      inputs.forEach((input,i)=>{
+      inputs.forEach((input)=>{
         const correct = input.dataset.solution.trim().toLowerCase();
         const answer = input.value.trim().toLowerCase();
         const p = document.createElement('p');
