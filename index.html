@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Übung: Tempus & Konjunktiv I</title>
+<title>Interaktive Übung: Tempus & Konjunktiv I</title>
 <style>
   body {font-family: Arial, sans-serif; margin:0; padding:0; background:#f0f2f5; color:#111;}
   header {background:#2b7ed3; color:white; padding:12px; position:sticky; top:0; z-index:100;}
@@ -21,15 +21,17 @@
   .task {margin:10px 0;}
   .task label {display:block; margin-bottom:4px; font-weight:600;}
   input[type=text] {width:100%; padding:6px 8px; border-radius:4px; border:1px solid #aaa; margin-bottom:8px; box-sizing:border-box;}
-  button.show-solution {background:#2ea063; color:white; border:none; padding:6px 10px; border-radius:4px; cursor:pointer; font-weight:600; margin-bottom:8px;}
-  .solution {display:none; background:#e0f7e9; padding:8px; border-radius:4px; margin-top:4px;}
+  button.check {background:#2ea063; color:white; border:none; padding:6px 10px; border-radius:4px; cursor:pointer; font-weight:600; margin-bottom:8px;}
+  .feedback {margin-top:4px; padding:6px; border-radius:4px; display:none;}
+  .correct {background:#e0f7e9; color:#1a6b3d;}
+  .wrong {background:#fbe0e0; color:#a10a0a;}
   @media (max-width:600px) {header h1{font-size:16px;} select{width:100%; font-size:14px;}}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Übung: Tempus & Konjunktiv I / Indirekte Rede</h1>
+  <h1>Interaktive Übung: Tempus & Konjunktiv I / Indirekte Rede</h1>
   <nav>
     <select id="exerciseSelect">
       <option value="tempus1">Tempus 1 – Wiederholung</option>
@@ -42,9 +44,9 @@
 
 <div class="container">
 
+  <!-- Tempus 1 -->
   <section id="tempus1" class="active">
     <h2>Tempus – Wiederholung</h2>
-    <p>Das <strong>Tempus</strong> zeigt an, wann eine Handlung stattfindet.</p>
     <table>
       <tr><th>Tempus</th><th>Beispiel</th><th>Verwendung</th></tr>
       <tr><td>Präsens</td><td>Ich spiele.</td><td>Jetzt / regelmäßig</td></tr>
@@ -62,11 +64,12 @@
       <input type="text" placeholder="3. Morgen werde ich ins Kino gehen" data-solution="Futur I">
       <input type="text" placeholder="4. Sie hat den Ball gefangen" data-solution="Perfekt">
       <input type="text" placeholder="5. Früher spielte ich oft im Park" data-solution="Präteritum">
-      <button class="show-solution">Lösung anzeigen</button>
-      <div class="solution"></div>
+      <button class="check">Überprüfen</button>
+      <div class="feedback"></div>
     </div>
   </section>
 
+  <!-- Tempus 2 -->
   <section id="tempus2">
     <h2>Tempus – Anwendung</h2>
     <div class="task">
@@ -76,20 +79,12 @@
       <input type="text" placeholder="3. (Präteritum → Plusquamperfekt) Sie rief ihre Freundin an" data-solution="Sie hatte ihre Freundin angerufen">
       <input type="text" placeholder="4. (Präsens → Futur I) Ich fahre morgen nach Berlin" data-solution="Ich werde morgen nach Berlin fahren">
       <input type="text" placeholder="5. (Perfekt → Präsens) Ihr habt gut gearbeitet" data-solution="Ihr arbeitet gut">
-      <button class="show-solution">Lösung anzeigen</button>
-      <div class="solution"></div>
-    </div>
-
-    <div class="task">
-      <label>Übung 3: Erzählzeiten erkennen</label>
-      <p>Gestern ging ich mit meiner Schwester spazieren. Wir haben lange geredet und werden morgen wieder zusammen gehen.</p>
-      <input type="text" placeholder="Gefundene Zeiten" data-solution="Präteritum, Perfekt, Futur I">
-      <input type="text" placeholder="Begründung / Erläuterung" data-solution="Vergangenheit, Vergangenheit mit Bezug zur Gegenwart, Zukunft">
-      <button class="show-solution">Lösung anzeigen</button>
-      <div class="solution"></div>
+      <button class="check">Überprüfen</button>
+      <div class="feedback"></div>
     </div>
   </section>
 
+  <!-- Konjunktiv I -->
   <section id="konj1">
     <h2>Konjunktiv I / Indirekte Rede</h2>
     <table>
@@ -103,39 +98,30 @@
     </table>
 
     <div class="task">
-      <label>Übung 1: Direkte Rede → Indirekte Rede</label>
+      <label>Übung 3: Direkte Rede → Indirekte Rede</label>
       <input type="text" placeholder="1. Maria sagt: 'Ich gehe morgen schwimmen.'" data-solution="Maria sagt, sie gehe morgen schwimmen.">
       <input type="text" placeholder="2. Paul meint: 'Wir haben das Spiel gewonnen.'" data-solution="Paul meint, sie hätten das Spiel gewonnen.">
       <input type="text" placeholder="3. Der Lehrer erklärt: 'Ihr schreibt morgen den Test.'" data-solution="Der Lehrer erklärt, sie schrieben morgen den Test.">
       <input type="text" placeholder="4. Anna ruft: 'Ich komme gleich!'" data-solution="Anna ruft, sie komme gleich.">
       <input type="text" placeholder="5. Der Junge sagt: 'Meine Freunde warten schon.'" data-solution="Der Junge sagt, seine Freunde warteten schon.">
-      <button class="show-solution">Lösung anzeigen</button>
-      <div class="solution"></div>
+      <button class="check">Überprüfen</button>
+      <div class="feedback"></div>
     </div>
   </section>
 
+  <!-- Konjunktiv I Vertiefung -->
   <section id="konj2">
     <h2>Konjunktiv I – Vertiefung</h2>
     <div class="task">
-      <label>Übung 2: Konjunktiv-I-Formen bilden</label>
+      <label>Übung 4: Konjunktiv-I-Formen bilden</label>
       <input type="text" placeholder="gehen →" data-solution="gehe, gehest, gehe, gehen, gehet, gehen">
       <input type="text" placeholder="machen →" data-solution="mache, machest, mache, machen, machet, machen">
       <input type="text" placeholder="wissen →" data-solution="wisse, wisses, wisse, wissen, wisset, wissen">
       <input type="text" placeholder="sein →" data-solution="sei, seiest, sei, seien, seiet, seien">
       <input type="text" placeholder="haben →" data-solution="habe, habest, habe, haben, habet, haben">
       <input type="text" placeholder="kommen →" data-solution="komme, kommest, komme, kommen, kommet, kommen">
-      <button class="show-solution">Lösung anzeigen</button>
-      <div class="solution"></div>
-    </div>
-
-    <div class="task">
-      <label>Übung 3: Kurzer Text — indirekte Rede</label>
-      <p>„Lena sagt: 'Ich habe heute keine Hausaufgaben.' Max meint: 'Wir treffen uns später im Park.' Der Lehrer erklärt: 'Ihr dürft die Aufgaben auch morgen abgeben.'“</p>
-      <input type="text" placeholder="Indirekte Rede Lena" data-solution="Lena sagt, sie habe heute keine Hausaufgaben.">
-      <input type="text" placeholder="Indirekte Rede Max" data-solution="Max meint, sie träfen sich später im Park.">
-      <input type="text" placeholder="Indirekte Rede Lehrer" data-solution="Der Lehrer erklärt, sie dürften die Aufgaben auch morgen abgeben.">
-      <button class="show-solution">Lösung anzeigen</button>
-      <div class="solution"></div>
+      <button class="check">Überprüfen</button>
+      <div class="feedback"></div>
     </div>
   </section>
 
@@ -150,20 +136,27 @@
     document.getElementById(select.value).classList.add('active');
   });
 
-  // Lösung anzeigen
-  document.querySelectorAll('button.show-solution').forEach(btn=>{
+  // Antworten überprüfen
+  document.querySelectorAll('button.check').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const container = btn.parentElement;
-      const solutionDiv = container.querySelector('.solution');
       const inputs = container.querySelectorAll('input[type=text]');
-      solutionDiv.innerHTML = '';
+      const feedback = container.querySelector('.feedback');
+      feedback.innerHTML='';
       inputs.forEach((input,i)=>{
+        const correct = input.dataset.solution.trim().toLowerCase();
+        const answer = input.value.trim().toLowerCase();
         const p = document.createElement('p');
-        p.textContent = `${i+1}. ${input.dataset.solution}`;
-        solutionDiv.appendChild(p);
+        if(answer === correct){
+          p.textContent = `✓ ${input.placeholder}`;
+          p.className='correct';
+        } else {
+          p.textContent = `✗ ${input.placeholder} → Lösung: ${input.dataset.solution}`;
+          p.className='wrong';
+        }
+        feedback.appendChild(p);
       });
-      solutionDiv.style.display = 'block';
-      btn.style.display='none';
+      feedback.style.display='block';
     });
   });
 </script>
