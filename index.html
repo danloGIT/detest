@@ -14,8 +14,9 @@
     --box:#f3f6fb;
     --ok:#e6fbf0;
     --bad:#fff0f0;
+    --text:#0b1220;
   }
-  html,body{height:100%; margin:0; font-family:Inter, "Segoe UI", Roboto, Arial, sans-serif; background:var(--bg); color:#0b1220;}
+  html,body{height:100%; margin:0; font-family:Inter, "Segoe UI", Roboto, Arial, sans-serif; background:var(--bg); color:var(--text);}
   header{background:linear-gradient(90deg,var(--accent), #4fa0e6); color:white; padding:14px 12px; position:sticky; top:0; z-index:50; box-shadow:0 2px 8px rgba(11,18,32,0.08);}
   .wrap{max-width:980px; margin:18px auto; padding:0 12px;}
   header .top{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;}
@@ -23,38 +24,44 @@
   .controls{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
   select, button {font-weight:600; border:0; padding:8px 10px; border-radius:8px;}
   select{background:white; color:var(--accent); box-shadow:0 1px 0 rgba(0,0,0,0.06);}
-  .btn-ghost{background:rgba(255,255,255,0.12); color:white;}
+  .btn-ghost{background:rgba(255,255,255,0.12); color:white; border-radius:8px; padding:8px 10px;}
   .page{background:transparent; margin-top:14px;}
   .card{background:var(--card); border-radius:12px; padding:14px; border:1px solid rgba(11,18,32,0.04); box-shadow:0 4px 14px rgba(11,18,32,0.03); margin-bottom:14px;}
   h2{color:var(--accent-2); margin:6px 0 10px 0;}
   h3{color:var(--accent); margin:6px 0;}
   p.lead{color:var(--muted); margin:0 0 10px 0;}
-  table.t{width:100%; border-collapse:collapse; margin:8px 0 12px 0;}
-  table.t th, table.t td{border:1px solid #e1e8f2; padding:8px; text-align:left; font-size:14px;}
+  table.t{width:100%; border-collapse:collapse; margin:8px 0 12px 0; table-layout:fixed;}
+  table.t th, table.t td{border:1px solid #e1e8f2; padding:8px; text-align:left; font-size:14px; vertical-align:middle;}
   table.t th{background:linear-gradient(180deg,#eef8ff,#f7fbff); color:var(--accent); font-weight:700;}
+  table.t td.solution {display:none; color:var(--muted); font-size:13px; }
   .task{margin:10px 0;}
   .task label{display:block; font-weight:700; margin-bottom:8px;}
-  .inputs{display:grid; grid-template-columns: 1fr; gap:8px;}
-  @media(min-width:720px){ .inputs{grid-template-columns: 1fr 1fr; } }
-  input[type="text"]{width:100%; padding:10px 12px; border-radius:8px; border:1px solid #d8e3f3; background:var(--box); box-sizing:border-box; font-size:14px;}
+  .inp{width:100%; padding:8px 10px; border-radius:8px; border:1px solid #d8e3f3; background:var(--box); box-sizing:border-box; font-size:14px;}
+  .inp.correct{background:linear-gradient(90deg,#e8f9ef,#f2fff6); border-color:#cdecd7;}
+  .inp.wrong{background:linear-gradient(90deg,#fff5f5,#fffaf6); border-color:#ffd7d7;}
   .controls-row{display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;}
   button.action{background:var(--accent-2); color:white; padding:10px 12px; border-radius:10px; cursor:pointer; border:0;}
-  button.secondary{background:transparent; border:1px solid #dbeaf1; color:var(--accent); padding:8px 10px;}
+  button.secondary{background:transparent; border:1px solid #dbeaf1; color:var(--accent); padding:8px 10px; border-radius:8px;}
   .feedback{margin-top:10px; border-radius:8px; padding:10px; display:none;}
   .feedback.ok{background:var(--ok); color:#0b5b3e; border:1px solid #d2f0db;}
   .feedback.bad{background:var(--bad); color:#8a1b1b; border:1px solid #ffd9d9;}
-  .sol-list{margin:6px 0 0 0; padding:8px 10px; background:#fbfeff; border-radius:8px; border:1px dashed #e1f4ec;}
+  .sol-list{margin:6px 0 0 0; padding:8px 10px; background:#fbfeff; border-radius:8px; border:1px dashed #e1f4ec; font-size:14px;}
   footer{font-size:13px; color:var(--muted); text-align:center; margin:18px 0;}
-  /* small helpers */
-  .hint{font-size:13px; color:var(--muted);}
-  .section-title{display:flex; align-items:center; gap:12px; justify-content:space-between;}
-  .count-badge{background:#eef6ff; color:var(--accent); padding:6px 8px; border-radius:999px; font-weight:700; font-size:13px;}
-  /* print friendliness */
+  .intro-grid{display:grid; gap:12px; grid-template-columns:1fr; margin-bottom:12px;}
+  @media(min-width:900px){ .intro-grid{grid-template-columns:1fr 1fr;} }
+  .small-hint{font-size:13px; color:var(--muted);}
+  .badge{background:#eef6ff; color:var(--accent); padding:6px 8px; border-radius:999px; font-weight:700; font-size:13px;}
+  /* responsive table: allow horizontal scroll on small screens */
+  .table-wrap{overflow:auto;}
   @media print{
     body{background:white;}
     header{display:none;}
     .wrap{margin:0; padding:0;}
     .card{box-shadow:none; border:1px solid #ddd;}
+    input.inp{border-bottom:1px solid #999; background:transparent;}
+    table.t th, table.t td {font-size:12px;}
+    .table-wrap{overflow:visible;}
+    button{display:none;}
   }
 </style>
 </head>
@@ -63,16 +70,17 @@
   <div class="wrap">
     <div class="top">
       <h1>Interaktive Übungen — Tempus &amp; Konjunktiv I (7. Klasse)</h1>
-      <div class="controls">
-        <span class="hint">Abschnitt wählen:</span>
+      <div class="controls" role="navigation" aria-label="Abschnittsauswahl">
+        <label for="navSelect" class="small-hint" style="display:none">Abschnitt wählen</label>
         <select id="navSelect" aria-label="Abschnitt wählen">
+          <option value="intro">Einführung</option>
           <option value="tempus1">Tempus 1 — Wiederholung</option>
           <option value="tempus2">Tempus 2 — Anwendung</option>
           <option value="konj1">Konjunktiv I — Indirekte Rede</option>
           <option value="konj2">Konjunktiv I — Vertiefung</option>
           <option value="mehr">Mehr lernen (Extra)</option>
         </select>
-        <button id="showAllSol" class="btn-ghost" title="Alle Lösungen ein-/ausblenden">Alle Lösungen</button>
+        <button id="showAllSol" class="btn-ghost" title="Lösungen des sichtbaren Abschnitts anzeigen">Alle Lösungen</button>
       </div>
     </div>
   </div>
@@ -80,307 +88,436 @@
 
 <main class="wrap page">
 
+  <!-- INTRO -->
+  <section id="intro" class="card section" style="display:block;">
+    <div class="intro-grid">
+      <div style="padding:10px; border-radius:10px; border:1px solid #e7f1ff; background:linear-gradient(180deg,#fbfeff,#f7fbff);">
+        <h3>Was ist <strong>Tempus</strong>?</h3>
+        <p class="small-hint">Tempus = Zeitform. Gibt an, wann etwas passiert (Gegenwart, Vergangenheit, Zukunft).</p>
+        <table class="t" aria-hidden="false">
+          <thead><tr><th>Tempus</th><th>Beispiel</th></tr></thead>
+          <tbody>
+            <tr><td>Präsens</td><td>Ich spiele. → Gegenwart / regelmäßig</td></tr>
+            <tr><td>Präteritum</td><td>Ich spielte. → Vergangenheit (Erzählungen)</td></tr>
+            <tr><td>Perfekt</td><td>Ich habe gespielt. → Vergangenheit mit Gegenwartsbezug</td></tr>
+            <tr><td>Plusquamperfekt</td><td>Ich hatte gespielt. → Vorvergangenheit</td></tr>
+            <tr><td>Futur I</td><td>Ich werde spielen. → Zukunft</td></tr>
+            <tr><td>Futur II</td><td>Ich werde gespielt haben. → abgeschlossene Zukunftshandlung</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="padding:10px; border-radius:10px; border:1px solid #eaf9ee; background:linear-gradient(180deg,#fbfffb,#f8fff6);">
+        <h3>Was ist <strong>Konjunktiv I</strong>?</h3>
+        <p class="small-hint">Konjunktiv I wird oft für die <strong>indirekte Rede</strong> verwendet: Wiedergeben, was jemand gesagt hat, ohne es wörtlich zu zitieren.</p>
+        <table class="t" aria-hidden="false">
+          <thead><tr><th>Person</th><th>Indikativ</th><th>Konjunktiv I</th></tr></thead>
+          <tbody>
+            <tr><td>ich</td><td>sage</td><td>sage</td></tr>
+            <tr><td>du</td><td>sagst</td><td>sagest</td></tr>
+            <tr><td>er/sie/es</td><td>sagt</td><td>sage</td></tr>
+            <tr><td>wir</td><td>sagen</td><td>sagen</td></tr>
+            <tr><td>ihr</td><td>sagt</td><td>saget</td></tr>
+            <tr><td>sie</td><td>sagen</td><td>sagen</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div style="margin-top:12px; padding:10px; border-radius:10px; border:1px solid #f0f0f0; background:var(--card);">
+      <h3>Wie funktioniert diese Seite?</h3>
+      <ul class="small-hint">
+        <li>Schreibe deine Antwort ins Eingabefeld.</li>
+        <li>Die Antwort wird <strong>automatisch</strong> geprüft, während du tippst und wenn du das Feld verlässt (mobil- und touch-optimiert).</li>
+        <li>Grün = richtig, Rot = falsch. Lösungen sind <strong>zuerst versteckt</strong>. Du kannst sie per Button anzeigen.</li>
+        <li>Benutze das Dropdown oben, um zwischen den Abschnitten zu wechseln.</li>
+      </ul>
+    </div>
+  </section>
+
   <!-- TEMPU S 1 -->
-  <section id="tempus1" class="card section">
-    <div class="section-title">
+  <section id="tempus1" class="card section" style="display:none;">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
       <div>
         <h2>Tempus — Wiederholung</h2>
         <p class="lead">Bestimme die Zeitform (z. B. Präsens, Präteritum, Perfekt, Plusquamperfekt, Futur I, Futur II).</p>
       </div>
-      <div class="count-badge">12 Aufgaben</div>
+      <div class="badge">12 Aufgaben</div>
     </div>
 
-    <table class="t" aria-hidden="false">
-      <thead><tr><th>Tempus</th><th>Beispiel</th><th>Wann?</th></tr></thead>
-      <tbody>
-        <tr><td>Präsens</td><td>Ich spiele.</td><td>Jetzt / regelmäßig</td></tr>
-        <tr><td>Präteritum</td><td>Ich spielte.</td><td>Vergangenheit (Erzählungen)</td></tr>
-        <tr><td>Perfekt</td><td>Ich habe gespielt.</td><td>Vergangenheit mit Gegenwartsbezug</td></tr>
-        <tr><td>Plusquamperfekt</td><td>Ich hatte gespielt.</td><td>Vorvergangenheit</td></tr>
-        <tr><td>Futur I</td><td>Ich werde spielen.</td><td>Zukunft / Vermutung</td></tr>
-        <tr><td>Futur II</td><td>Ich werde gespielt haben.</td><td>Abgeschlossene Handlung in Zukunft</td></tr>
-      </tbody>
-    </table>
+    <div class="table-wrap">
+      <table class="t" id="t1-table">
+        <thead><tr><th style="width:4em;">Nr.</th><th style="width:48%;">Aufgabe</th><th style="width:32%;">Deine Antwort</th><th style="width:16%;">Lösung</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Peter liest ein spannendes Buch.</td><td><input class="inp" data-solution="Präsens" /></td><td class="solution">Präsens</td></tr>
+          <tr><td>2</td><td>Wir hatten schon gegessen, als er kam.</td><td><input class="inp" data-solution="Plusquamperfekt" /></td><td class="solution">Plusquamperfekt</td></tr>
+          <tr><td>3</td><td>Morgen werde ich ins Kino gehen.</td><td><input class="inp" data-solution="Futur I" /></td><td class="solution">Futur I</td></tr>
+          <tr><td>4</td><td>Sie hat den Ball gefangen.</td><td><input class="inp" data-solution="Perfekt" /></td><td class="solution">Perfekt</td></tr>
+          <tr><td>5</td><td>Früher spielte ich oft im Park.</td><td><input class="inp" data-solution="Präteritum" /></td><td class="solution">Präteritum</td></tr>
+          <tr><td>6</td><td>Ich kaufe jeden Freitag im Supermarkt ein.</td><td><input class="inp" data-solution="Präsens" /></td><td class="solution">Präsens</td></tr>
+          <tr><td>7</td><td>Gestern kam ein Brief an.</td><td><input class="inp" data-solution="Präteritum" /></td><td class="solution">Präteritum</td></tr>
+          <tr><td>8</td><td>Wir haben das Museum besucht.</td><td><input class="inp" data-solution="Perfekt" /></td><td class="solution">Perfekt</td></tr>
+          <tr><td>9</td><td>Sie hatte bereits geschlafen, als der Film begann.</td><td><input class="inp" data-solution="Plusquamperfekt" /></td><td class="solution">Plusquamperfekt</td></tr>
+          <tr><td>10</td><td>Bis dahin werde ich das Buch gelesen haben.</td><td><input class="inp" data-solution="Futur II" /></td><td class="solution">Futur II</td></tr>
+          <tr><td>11</td><td>Meine Schwester übt täglich Klavier.</td><td><input class="inp" data-solution="Präsens" /></td><td class="solution">Präsens</td></tr>
+          <tr><td>12</td><td>Vor zwei Jahren reisten sie nach Spanien.</td><td><input class="inp" data-solution="Präteritum" /></td><td class="solution">Präteritum</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-    <div class="task">
-      <label>Übung 1 — Bestimme das Tempus</label>
-      <div class="inputs" id="t1-inputs">
-        <input type="text" data-solution="Präsens" placeholder="1) Peter liest ein spannendes Buch.">
-        <input type="text" data-solution="Plusquamperfekt" placeholder="2) Wir hatten schon gegessen, als er kam.">
-        <input type="text" data-solution="Futur I" placeholder="3) Morgen werde ich ins Kino gehen.">
-        <input type="text" data-solution="Perfekt" placeholder="4) Sie hat den Ball gefangen.">
-        <input type="text" data-solution="Präteritum" placeholder="5) Früher spielte ich oft im Park.">
-        <input type="text" data-solution="Präsens" placeholder="6) Ich kaufe jeden Freitag im Supermarkt ein.">
-        <input type="text" data-solution="Präteritum" placeholder="7) Gestern kam ein Brief an.">
-        <input type="text" data-solution="Perfekt" placeholder="8) Wir haben das Museum besucht.">
-        <input type="text" data-solution="Plusquamperfekt" placeholder="9) Sie hatte bereits geschlafen, als der Film begann.">
-        <input type="text" data-solution="Futur II" placeholder="10) Bis dahin werde ich das Buch gelesen haben.">
-        <input type="text" data-solution="Präsens" placeholder="11) Meine Schwester übt täglich Klavier.">
-        <input type="text" data-solution="Präteritum" placeholder="12) Vor zwei Jahren reisten sie nach Spanien.">
-      </div>
-
-      <div class="controls-row">
-        <button class="action" data-action="check" data-target="tempus1">Überprüfen</button>
-        <button class="secondary" data-action="show" data-target="tempus1">Lösungen anzeigen</button>
-        <div id="tempus1-feedback" class="feedback" role="status"></div>
-      </div>
+    <div class="controls-row">
+      <button class="action" data-action="check" data-target="t1-table">Lösungen prüfen</button>
+      <button class="secondary" data-action="show" data-target="t1-table">Lösungen anzeigen</button>
+      <div id="t1-feedback" class="feedback" role="status"></div>
     </div>
   </section>
 
   <!-- TEMPUS 2 -->
   <section id="tempus2" class="card section" style="display:none;">
-    <div class="section-title">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
       <div>
         <h2>Tempus — Anwendung</h2>
-        <p class="lead">Setze die Sätze in die gewünschte Zeitform (z. B. Präsens → Perfekt, Präteritum → Plusquamperfekt usw.).</p>
+        <p class="lead">Setze die Sätze in die gewünschte Zeitform.</p>
       </div>
-      <div class="count-badge">12 Aufgaben</div>
+      <div class="badge">12 Aufgaben</div>
     </div>
 
-    <div class="task">
-      <label>Übung 2 — Zeitform umwandeln</label>
-      <div class="inputs" id="t2-inputs">
-        <input type="text" data-solution="Ich habe einen Apfel gegessen" placeholder="1) (Präsens → Perfekt) Ich esse einen Apfel.">
-        <input type="text" data-solution="Sie lief schnell" placeholder="2) (Präsens → Präteritum) Sie läuft schnell.">
-        <input type="text" data-solution="Wir hatten im Garten gespielt" placeholder="3) (Präteritum → Plusquamperfekt) Wir spielten im Garten.">
-        <input type="text" data-solution="Ich werde meine Oma besuchen" placeholder="4) (Präsens → Futur I) Ich besuche meine Oma.">
-        <input type="text" data-solution="Ihr schließt das Projekt ab" placeholder="5) (Perfekt → Präsens) Ihr habt das Projekt abgeschlossen.">
-        <input type="text" data-solution="Er wird das Fahrrad repariert haben" placeholder="6) (Präteritum → Futur II) Er reparierte das Fahrrad.">
-        <input type="text" data-solution="Wir haben das Buch gelesen" placeholder="7) (Präsens → Perfekt) Wir lesen das Buch.">
-        <input type="text" data-solution="Du wirst für die Prüfung lernen" placeholder="8) (Präsens → Futur I) Du lernst für die Prüfung.">
-        <input type="text" data-solution="Sie hatte angerufen" placeholder="9) (Perfekt → Plusquamperfekt) Sie hat angerufen.">
-        <input type="text" data-solution="Ich habe einen Brief geschrieben" placeholder="10) (Präteritum → Perfekt) Ich schrieb einen Brief.">
-        <input type="text" data-solution="Er wird morgen angekommen sein" placeholder="11) (Präsens → Futur II) Er kommt morgen an.">
-        <input type="text" data-solution="Wir hatten schon begonnen" placeholder="12) (Präteritum → Plusquamperfekt) Wir begannen bereits.">
-      </div>
+    <div class="table-wrap">
+      <table class="t" id="t2-table">
+        <thead><tr><th>Nr.</th><th>Aufgabe</th><th>Deine Antwort</th><th class="solution">Lösung</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>(Präsens → Perfekt) Ich esse einen Apfel.</td><td><input class="inp" data-solution="Ich habe einen Apfel gegessen" /></td><td class="solution">Ich habe einen Apfel gegessen</td></tr>
+          <tr><td>2</td><td>(Präsens → Präteritum) Sie läuft schnell.</td><td><input class="inp" data-solution="Sie lief schnell" /></td><td class="solution">Sie lief schnell</td></tr>
+          <tr><td>3</td><td>(Präteritum → Plusquamperfekt) Wir spielten im Garten.</td><td><input class="inp" data-solution="Wir hatten im Garten gespielt" /></td><td class="solution">Wir hatten im Garten gespielt</td></tr>
+          <tr><td>4</td><td>(Präsens → Futur I) Ich besuche meine Oma.</td><td><input class="inp" data-solution="Ich werde meine Oma besuchen" /></td><td class="solution">Ich werde meine Oma besuchen</td></tr>
+          <tr><td>5</td><td>(Perfekt → Präsens) Ihr habt das Projekt abgeschlossen.</td><td><input class="inp" data-solution="Ihr schließt das Projekt ab" /></td><td class="solution">Ihr schließt das Projekt ab</td></tr>
+          <tr><td>6</td><td>(Präteritum → Futur II) Er reparierte das Fahrrad.</td><td><input class="inp" data-solution="Er wird das Fahrrad repariert haben" /></td><td class="solution">Er wird das Fahrrad repariert haben</td></tr>
+          <tr><td>7</td><td>(Präsens → Perfekt) Wir lesen das Buch.</td><td><input class="inp" data-solution="Wir haben das Buch gelesen" /></td><td class="solution">Wir haben das Buch gelesen</td></tr>
+          <tr><td>8</td><td>(Präsens → Futur I) Du lernst für die Prüfung.</td><td><input class="inp" data-solution="Du wirst für die Prüfung lernen" /></td><td class="solution">Du wirst für die Prüfung lernen</td></tr>
+          <tr><td>9</td><td>(Perfekt → Plusquamperfekt) Sie hat angerufen.</td><td><input class="inp" data-solution="Sie hatte angerufen" /></td><td class="solution">Sie hatte angerufen</td></tr>
+          <tr><td>10</td><td>(Präteritum → Perfekt) Ich schrieb einen Brief.</td><td><input class="inp" data-solution="Ich habe einen Brief geschrieben" /></td><td class="solution">Ich habe einen Brief geschrieben</td></tr>
+          <tr><td>11</td><td>(Präsens → Futur II) Er kommt morgen an.</td><td><input class="inp" data-solution="Er wird morgen angekommen sein" /></td><td class="solution">Er wird morgen angekommen sein</td></tr>
+          <tr><td>12</td><td>(Präteritum → Plusquamperfekt) Wir begannen bereits.</td><td><input class="inp" data-solution="Wir hatten schon begonnen" /></td><td class="solution">Wir hatten schon begonnen</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-      <div class="controls-row">
-        <button class="action" data-action="check" data-target="tempus2">Überprüfen</button>
-        <button class="secondary" data-action="show" data-target="tempus2">Lösungen anzeigen</button>
-        <div id="tempus2-feedback" class="feedback" role="status"></div>
-      </div>
+    <div class="controls-row">
+      <button class="action" data-action="check" data-target="t2-table">Lösungen prüfen</button>
+      <button class="secondary" data-action="show" data-target="t2-table">Lösungen anzeigen</button>
+      <div id="t2-feedback" class="feedback" role="status"></div>
     </div>
   </section>
 
-  <!-- KONJUNKTIV I - Indirekte Rede -->
+  <!-- KONJUNKTIV I -->
   <section id="konj1" class="card section" style="display:none;">
-    <div class="section-title">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
       <div>
         <h2>Konjunktiv I — Indirekte Rede</h2>
         <p class="lead">Wandle die direkte Rede in die indirekte Rede (Konjunktiv I) um.</p>
       </div>
-      <div class="count-badge">12 Aufgaben</div>
+      <div class="badge">12 Aufgaben</div>
     </div>
 
-    <div class="task">
-      <label>Übung 3 — Direkte → Indirekte Rede</label>
-      <div class="inputs" id="k1-inputs">
-        <input type="text" data-solution="Anna sagt, sie spiele heute Tennis." placeholder="1) Anna sagt: ‚Ich spiele heute Tennis.‘">
-        <input type="text" data-solution="Tom meint, sie hätten das Haus sauber gemacht." placeholder="2) Tom meint: ‚Wir haben das Haus sauber gemacht.‘">
-        <input type="text" data-solution="Der Lehrer sagt, sie müssten leise sein." placeholder="3) Der Lehrer sagt: ‚Ihr müsst leise sein.‘">
-        <input type="text" data-solution="Maria ruft, sie esse jetzt." placeholder="4) Maria ruft: ‚Ich esse jetzt!‘">
-        <input type="text" data-solution="Paul erklärt, sie träfen sich später." placeholder="5) Paul erklärt: ‚Wir treffen uns später.‘">
-        <input type="text" data-solution="Lisa sagt, sie habe keine Zeit." placeholder="6) Lisa sagt: ‚Ich habe keine Zeit.‘">
-        <input type="text" data-solution="Der Chef meint, sie müssten die Aufgaben abgeben." placeholder="7) Der Chef meint: ‚Ihr müsst die Aufgaben abgeben.‘">
-        <input type="text" data-solution="Peter sagt, sie spielten Fußball." placeholder="8) Peter sagt: ‚Wir spielen Fußball.‘">
-        <input type="text" data-solution="Anna erklärt, sie gehe jetzt nach Hause." placeholder="9) Anna erklärt: ‚Ich gehe jetzt nach Hause.‘">
-        <input type="text" data-solution="Max ruft, sie hätten Hunger." placeholder="10) Max ruft: ‚Wir haben Hunger!‘">
-        <input type="text" data-solution="Er sagt, er sei müde." placeholder="11) Er sagt: ‚Ich bin müde.‘">
-        <input type="text" data-solution="Sie sagt, sie wisse es nicht." placeholder="12) Sie sagt: ‚Ich weiß es nicht.‘">
-      </div>
+    <div class="table-wrap">
+      <table class="t" id="k1-table">
+        <thead><tr><th>Nr.</th><th>Direkt</th><th>Deine indirekte Form</th><th class="solution">Lösung</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Anna sagt: „Ich spiele heute Tennis.“</td><td><input class="inp" data-solution="Anna sagt, sie spiele heute Tennis." /></td><td class="solution">Anna sagt, sie spiele heute Tennis.</td></tr>
+          <tr><td>2</td><td>Tom meint: „Wir haben das Haus sauber gemacht.“</td><td><input class="inp" data-solution="Tom meint, sie hätten das Haus sauber gemacht." /></td><td class="solution">Tom meint, sie hätten das Haus sauber gemacht.</td></tr>
+          <tr><td>3</td><td>Der Lehrer sagt: „Ihr müsst leise sein.“</td><td><input class="inp" data-solution="Der Lehrer sagt, sie müssten leise sein." /></td><td class="solution">Der Lehrer sagt, sie müssten leise sein.</td></tr>
+          <tr><td>4</td><td>Maria ruft: „Ich esse jetzt!“</td><td><input class="inp" data-solution="Maria ruft, sie esse jetzt." /></td><td class="solution">Maria ruft, sie esse jetzt.</td></tr>
+          <tr><td>5</td><td>Paul erklärt: „Wir treffen uns später.“</td><td><input class="inp" data-solution="Paul erklärt, sie träfen sich später." /></td><td class="solution">Paul erklärt, sie träfen sich später.</td></tr>
+          <tr><td>6</td><td>Lisa sagt: „Ich habe keine Zeit.“</td><td><input class="inp" data-solution="Lisa sagt, sie habe keine Zeit." /></td><td class="solution">Lisa sagt, sie habe keine Zeit.</td></tr>
+          <tr><td>7</td><td>Der Chef meint: „Ihr müsst die Aufgaben abgeben.“</td><td><input class="inp" data-solution="Der Chef meint, sie müssten die Aufgaben abgeben." /></td><td class="solution">Der Chef meint, sie müssten die Aufgaben abgeben.</td></tr>
+          <tr><td>8</td><td>Peter sagt: „Wir spielen Fußball.“</td><td><input class="inp" data-solution="Peter sagt, sie spielten Fußball." /></td><td class="solution">Peter sagt, sie spielten Fußball.</td></tr>
+          <tr><td>9</td><td>Anna erklärt: „Ich gehe jetzt nach Hause.“</td><td><input class="inp" data-solution="Anna erklärt, sie gehe jetzt nach Hause." /></td><td class="solution">Anna erklärt, sie gehe jetzt nach Hause.</td></tr>
+          <tr><td>10</td><td>Max ruft: „Wir haben Hunger!“</td><td><input class="inp" data-solution="Max ruft, sie hätten Hunger." /></td><td class="solution">Max ruft, sie hätten Hunger.</td></tr>
+          <tr><td>11</td><td>Er sagt: „Ich bin müde.“</td><td><input class="inp" data-solution="Er sagt, er sei müde." /></td><td class="solution">Er sagt, er sei müde.</td></tr>
+          <tr><td>12</td><td>Sie sagt: „Ich weiß es nicht.“</td><td><input class="inp" data-solution="Sie sagt, sie wisse es nicht." /></td><td class="solution">Sie sagt, sie wisse es nicht.</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-      <div class="controls-row">
-        <button class="action" data-action="check" data-target="konj1">Überprüfen</button>
-        <button class="secondary" data-action="show" data-target="konj1">Lösungen anzeigen</button>
-        <div id="konj1-feedback" class="feedback" role="status"></div>
-      </div>
+    <div class="controls-row">
+      <button class="action" data-action="check" data-target="k1-table">Lösungen prüfen</button>
+      <button class="secondary" data-action="show" data-target="k1-table">Lösungen anzeigen</button>
+      <div id="k1-feedback" class="feedback" role="status"></div>
     </div>
   </section>
 
-  <!-- KONJUNKTIV I - VERTIEFUNG -->
+  <!-- KONJUNKTIV 2 (Vertiefung) -->
   <section id="konj2" class="card section" style="display:none;">
-    <div class="section-title">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
       <div>
         <h2>Konjunktiv I — Vertiefung</h2>
-        <p class="lead">Bilde die Konjunktiv-I Formen oder wandle in die indirekte Rede (schwerere Beispiele).</p>
+        <p class="lead">Bilde Konjunktiv-I-Formen / anspruchsvollere indirekte Rede.</p>
       </div>
-      <div class="count-badge">12 Aufgaben</div>
+      <div class="badge">12 Aufgaben</div>
     </div>
 
-    <div class="task">
-      <label>Übung 4 — Konjunktiv I Formen / kurze Sätze</label>
-      <div class="inputs" id="k2-inputs">
-        <input type="text" data-solution="fahre, fahrest, fahre, fahren, fähret, fahren" placeholder="1) fahren → (Konjunktiv I):">
-        <input type="text" data-solution="schreibe, schreibest, schreibe, schreiben, schreibet, schreiben" placeholder="2) schreiben →">
-        <input type="text" data-solution="lese, lesest, lese, lesen, leset, lesen" placeholder="3) lesen →">
-        <input type="text" data-solution="esse, essest, esse, essen, esset, essen" placeholder="4) essen →">
-        <input type="text" data-solution="trinke, trinkest, trinke, trinken, trinket, trinken" placeholder="5) trinken →">
-        <input type="text" data-solution="schlafe, schlafest, schlafe, schlafen, schlafet, schlafen" placeholder="6) schlafen →">
-        <input type="text" data-solution="laufe, laufest, laufe, laufen, laufet, laufen" placeholder="7) laufen →">
-        <input type="text" data-solution="singe, singest, singe, singen, singet, singen" placeholder="8) singen →">
-        <input type="text" data-solution="spiele, spielest, spiele, spielen, spielet, spielen" placeholder="9) spielen →">
-        <input type="text" data-solution="arbeite, arbeitest, arbeite, arbeiten, arbeitet, arbeiten" placeholder="10) arbeiten →">
-        <input type="text" data-solution="Er sagt, er habe das Werkzeug gefunden." placeholder="11) Direkte Rede: ‚Ich habe das Werkzeug gefunden.‘ → indirekt:">
-        <input type="text" data-solution="Sie meint, sie sei pünktlich gekommen." placeholder="12) Direkte Rede: ‚Ich bin pünktlich gekommen.‘ → indirekt:">
-      </div>
+    <div class="table-wrap">
+      <table class="t" id="k2-table">
+        <thead><tr><th>Nr.</th><th>Aufgabe</th><th>Deine Antwort</th><th class="solution">Lösung</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>fahren → (Konjunktiv I)</td><td><input class="inp" data-solution="fahre, fahrest, fahre, fahren, fähret, fahren" /></td><td class="solution">fahre, fahrest, fahre, fahren, fähret, fahren</td></tr>
+          <tr><td>2</td><td>schreiben → (Konjunktiv I)</td><td><input class="inp" data-solution="schreibe, schreibest, schreibe, schreiben, schreibet, schreiben" /></td><td class="solution">schreibe, schreibest, schreibe, schreiben, schreibet, schreiben</td></tr>
+          <tr><td>3</td><td>lesen → (Konjunktiv I)</td><td><input class="inp" data-solution="lese, lesest, lese, lesen, leset, lesen" /></td><td class="solution">lese, lesest, lese, lesen, leset, lesen</td></tr>
+          <tr><td>4</td><td>essen → (Konjunktiv I)</td><td><input class="inp" data-solution="esse, essest, esse, essen, esset, essen" /></td><td class="solution">esse, essest, esse, essen, esset, essen</td></tr>
+          <tr><td>5</td><td>trinken → (Konjunktiv I)</td><td><input class="inp" data-solution="trinke, trinkest, trinke, trinken, trinket, trinken" /></td><td class="solution">trinke, trinkest, trinke, trinken, trinket, trinken</td></tr>
+          <tr><td>6</td><td>schlafen → (Konjunktiv I)</td><td><input class="inp" data-solution="schlafe, schlafest, schlafe, schlafen, schlafet, schlafen" /></td><td class="solution">schlafe, schlafest, schlafe, schlafen, schlafet, schlafen</td></tr>
+          <tr><td>7</td><td>laufen → (Konjunktiv I)</td><td><input class="inp" data-solution="laufe, laufest, laufe, laufen, laufet, laufen" /></td><td class="solution">laufe, laufest, laufe, laufen, laufet, laufen</td></tr>
+          <tr><td>8</td><td>singen → (Konjunktiv I)</td><td><input class="inp" data-solution="singe, singest, singe, singen, singet, singen" /></td><td class="solution">singe, singest, singe, singen, singet, singen</td></tr>
+          <tr><td>9</td><td>spielen → (Konjunktiv I)</td><td><input class="inp" data-solution="spiele, spielest, spiele, spielen, spielet, spielen" /></td><td class="solution">spiele, spielest, spiele, spielen, spielet, spielen</td></tr>
+          <tr><td>10</td><td>arbeiten → (Konjunktiv I)</td><td><input class="inp" data-solution="arbeite, arbeitest, arbeite, arbeiten, arbeitet, arbeiten" /></td><td class="solution">arbeite, arbeitest, arbeite, arbeiten, arbeitet, arbeiten</td></tr>
+          <tr><td>11</td><td>Direkte Rede: „Ich habe das Werkzeug gefunden.“ → indirekt</td><td><input class="inp" data-solution="Er sagt, er habe das Werkzeug gefunden." /></td><td class="solution">Er sagt, er habe das Werkzeug gefunden.</td></tr>
+          <tr><td>12</td><td>Direkte Rede: „Ich bin pünktlich gekommen.“ → indirekt</td><td><input class="inp" data-solution="Sie meint, sie sei pünktlich gekommen." /></td><td class="solution">Sie meint, sie sei pünktlich gekommen.</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-      <div class="controls-row">
-        <button class="action" data-action="check" data-target="konj2">Überprüfen</button>
-        <button class="secondary" data-action="show" data-target="konj2">Lösungen anzeigen</button>
-        <div id="konj2-feedback" class="feedback" role="status"></div>
-      </div>
+    <div class="controls-row">
+      <button class="action" data-action="check" data-target="k2-table">Lösungen prüfen</button>
+      <button class="secondary" data-action="show" data-target="k2-table">Lösungen anzeigen</button>
+      <div id="k2-feedback" class="feedback" role="status"></div>
     </div>
   </section>
 
   <!-- MEHR LERNEN (EXTRA) -->
   <section id="mehr" class="card section" style="display:none;">
-    <div class="section-title">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
       <div>
-        <h2>Mehr lernen (Extra) — gemischte & schwerere Aufgaben</h2>
-        <p class="lead">Dieser Bereich kombiniert Tempus-Umwandlungen, längere Sätze und Konjunktiv-I-Aufgaben — ideal zur Vertiefung.</p>
+        <h2>Mehr lernen (Extra)</h2>
+        <p class="lead">Gemischte, etwas schwierigere Aufgaben — Tempus-Umwandlungen, längere Sätze und indirekte Rede.</p>
       </div>
-      <div class="count-badge">20 Aufgaben</div>
+      <div class="badge">20 Aufgaben</div>
     </div>
 
-    <div class="task">
-      <label>Übung M1 — Gemischt (Tempus & Konjunktiv I)</label>
-      <div class="inputs" id="m-inputs">
-        <input type="text" data-solution="Als sie ankam, hatten wir bereits begonnen" placeholder="1) (Umwandeln) ‚Wir begannen bereits.‘ → Vorvergangenheit (Plusquamperfekt) mit 'als sie ankam'">
-        <input type="text" data-solution="Er sagt, er werde später anrufen" placeholder="2) (Indirekt) Direkte Rede: ‚Ich rufe später an.‘">
-        <input type="text" data-solution="Ich werde das Buch bis morgen gelesen haben" placeholder="3) (Futur II) ‚Ich lese das Buch bis morgen.‘">
-        <input type="text" data-solution="Sie meinte, sie habe den Brief nicht bekommen" placeholder="4) (Indirekt) ‚Ich habe den Brief nicht bekommen.‘">
-        <input type="text" data-solution="Bevor ich ankam, hatten sie die Torte gegessen" placeholder="5) (Plusquamperfekt) ‚Sie aßen die Torte bevor ich ankam.‘">
-        <input type="text" data-solution="Wir werden morgen angekommen sein" placeholder="6) (Futur II) ‚Wir kommen morgen an.‘">
-        <input type="text" data-solution="Er sagte, er sei krank" placeholder="7) (Indirekt) ‚Ich bin krank.‘">
-        <input type="text" data-solution="Sie hatte bereits geantwortet" placeholder="8) (Plusquamperfekt) ‚Sie antwortete schon.‘">
-        <input type="text" data-solution="Du wirst die Prüfung bestanden haben" placeholder="9) (Futur II) ‚Du bestehst die Prüfung.‘">
-        <input type="text" data-solution="Der Reporter behauptet, das Team habe gewonnen" placeholder="10) (Indirekt) ‚Wir haben gewonnen.‘">
-        <input type="text" data-solution="Nachdem er gegangen war, hatten wir die Tür abgeschlossen" placeholder="11) (Plusquamperfekt) ‚Wir schließen die Tür nachdem er geht.‘">
-        <input type="text" data-solution="Sie sagt, sie werde später dort sein" placeholder="12) (Indirekt) ‚Ich bin später dort.‘">
-        <input type="text" data-solution="Ich habe das Paket erhalten" placeholder="13) (Perfekt) ‚Ich bekomme das Paket.‘">
-        <input type="text" data-solution="Er meinte, sie hätten den Fehler bemerkt" placeholder="14) (Indirekt) ‚Wir haben den Fehler bemerkt.‘">
-        <input type="text" data-solution="Wir hatten uns bereits vorbereitet" placeholder="15) (Plusquamperfekt) ‚Wir bereiten uns vor.‘">
-        <input type="text" data-solution="Sie sagt, man solle leise sein" placeholder="16) (Konjunktiv I) Direkte Rede: ‚Seid leise!‘">
-        <input type="text" data-solution="Ich werde nachher zurückgerufen haben" placeholder="17) (Futur II) ‚Man ruft mich zurück.‘">
-        <input type="text" data-solution="Der Zeuge sagt, er habe alles gesehen" placeholder="18) (Indirekt) ‚Ich habe alles gesehen.‘">
-        <input type="text" data-solution="Er sagte, er sei schon gegangen" placeholder="19) (Indirekt) ‚Ich bin schon gegangen.‘">
-        <input type="text" data-solution="Wir werden das Problem gelöst haben" placeholder="20) (Futur II) ‚Wir lösen das Problem.‘">
-      </div>
+    <div class="table-wrap">
+      <table class="t" id="m-table">
+        <thead><tr><th>Nr.</th><th>Aufgabe</th><th>Deine Antwort</th><th class="solution">Lösung</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>„Wir begannen bereits.“ → Formuliere als Vorvergangenheit mit „als sie ankam“.</td><td><input class="inp" data-solution="Als sie ankam, hatten wir bereits begonnen" /></td><td class="solution">Als sie ankam, hatten wir bereits begonnen</td></tr>
+          <tr><td>2</td><td>Direkt: „Ich rufe später an.“ → Indirekt</td><td><input class="inp" data-solution="Er sagt, er werde später anrufen" /></td><td class="solution">Er sagt, er werde später anrufen</td></tr>
+          <tr><td>3</td><td>„Ich lese das Buch bis morgen.“ → Futur II</td><td><input class="inp" data-solution="Ich werde das Buch bis morgen gelesen haben" /></td><td class="solution">Ich werde das Buch bis morgen gelesen haben</td></tr>
+          <tr><td>4</td><td>Direkt: „Ich habe den Brief nicht bekommen.“ → Indirekt</td><td><input class="inp" data-solution="Sie meinte, sie habe den Brief nicht bekommen" /></td><td class="solution">Sie meinte, sie habe den Brief nicht bekommen</td></tr>
+          <tr><td>5</td><td>„Sie aßen die Torte bevor ich ankam.“ → Plusquamperfekt</td><td><input class="inp" data-solution="Bevor ich ankam, hatten sie die Torte gegessen" /></td><td class="solution">Bevor ich ankam, hatten sie die Torte gegessen</td></tr>
+          <tr><td>6</td><td>„Wir kommen morgen an.“ → Futur II</td><td><input class="inp" data-solution="Wir werden morgen angekommen sein" /></td><td class="solution">Wir werden morgen angekommen sein</td></tr>
+          <tr><td>7</td><td>Direkt: „Ich bin krank.“ → Indirekt</td><td><input class="inp" data-solution="Er sagte, er sei krank" /></td><td class="solution">Er sagte, er sei krank</td></tr>
+          <tr><td>8</td><td>„Sie antwortete schon.“ → Plusquamperfekt</td><td><input class="inp" data-solution="Sie hatte bereits geantwortet" /></td><td class="solution">Sie hatte bereits geantwortet</td></tr>
+          <tr><td>9</td><td>„Du bestehst die Prüfung.“ → Futur II</td><td><input class="inp" data-solution="Du wirst die Prüfung bestanden haben" /></td><td class="solution">Du wirst die Prüfung bestanden haben</td></tr>
+          <tr><td>10</td><td>Direkt: „Wir haben gewonnen.“ → Indirekt</td><td><input class="inp" data-solution="Der Reporter behauptet, das Team habe gewonnen" /></td><td class="solution">Der Reporter behauptet, das Team habe gewonnen</td></tr>
+          <tr><td>11</td><td>„Wir schließen die Tür nachdem er geht.“ → Plusquamperfekt (korrigiere)</td><td><input class="inp" data-solution="Nachdem er gegangen war, hatten wir die Tür abgeschlossen" /></td><td class="solution">Nachdem er gegangen war, hatten wir die Tür abgeschlossen</td></tr>
+          <tr><td>12</td><td>Direkt: „Ich bin später dort.“ → Indirekt</td><td><input class="inp" data-solution="Sie sagt, sie werde später dort sein" /></td><td class="solution">Sie sagt, sie werde später dort sein</td></tr>
+          <tr><td>13</td><td>„Ich bekomme das Paket.“ → Perfekt (umwandeln)</td><td><input class="inp" data-solution="Ich habe das Paket erhalten" /></td><td class="solution">Ich habe das Paket erhalten</td></tr>
+          <tr><td>14</td><td>Direkt: „Wir haben den Fehler bemerkt.“ → Indirekt</td><td><input class="inp" data-solution="Er meinte, sie hätten den Fehler bemerkt" /></td><td class="solution">Er meinte, sie hätten den Fehler bemerkt</td></tr>
+          <tr><td>15</td><td>„Wir bereiten uns vor.“ → Plusquamperfekt (umwandeln)</td><td><input class="inp" data-solution="Wir hatten uns bereits vorbereitet" /></td><td class="solution">Wir hatten uns bereits vorbereitet</td></tr>
+          <tr><td>16</td><td>Direkt: „Seid leise!“ → Indirekt (Konjunktiv I)</td><td><input class="inp" data-solution="Sie sagt, man solle leise sein" /></td><td class="solution">Sie sagt, man solle leise sein</td></tr>
+          <tr><td>17</td><td>„Man ruft mich zurück.“ → Futur II</td><td><input class="inp" data-solution="Ich werde nachher zurückgerufen worden sein" /></td><td class="solution">Ich werde nachher zurückgerufen worden sein</td></tr>
+          <tr><td>18</td><td>Direkt: „Ich habe alles gesehen.“ → Indirekt</td><td><input class="inp" data-solution="Der Zeuge sagt, er habe alles gesehen" /></td><td class="solution">Der Zeuge sagt, er habe alles gesehen</td></tr>
+          <tr><td>19</td><td>Direkt: „Ich bin schon gegangen.“ → Indirekt</td><td><input class="inp" data-solution="Er sagte, er sei schon gegangen" /></td><td class="solution">Er sagte, er sei schon gegangen</td></tr>
+          <tr><td>20</td><td>„Wir lösen das Problem.“ → Futur II</td><td><input class="inp" data-solution="Wir werden das Problem gelöst haben" /></td><td class="solution">Wir werden das Problem gelöst haben</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-      <div class="controls-row">
-        <button class="action" data-action="check" data-target="mehr">Überprüfen</button>
-        <button class="secondary" data-action="show" data-target="mehr">Lösungen anzeigen</button>
-        <div id="mehr-feedback" class="feedback" role="status"></div>
-      </div>
+    <div class="controls-row">
+      <button class="action" data-action="check" data-target="m-table">Lösungen prüfen</button>
+      <button class="secondary" data-action="show" data-target="m-table">Lösungen anzeigen</button>
+      <div id="m-table-feedback" class="feedback" role="status"></div>
     </div>
   </section>
 
   <footer>
-    Viel Erfolg beim Üben — du kannst die Seite ausdrucken oder offline verwenden.
+    Viel Erfolg beim Üben — du kannst die Seite speichern oder ausdrucken.
   </footer>
 </main>
 
 <script>
-/* Helper: normalize input and solution for flexible comparison */
+/* Normalisierung: flexibel vergleichen (Umlaute, Groß/klein, Satzzeichen, extra spaces) */
 function normalizeText(s){
-  if(!s) return "";
-  s = s.trim().toLowerCase();
-  // replace german umlauts common alternatives
-  s = s.replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss");
-  // also replace remaining diacritics (simple approach)
-  s = s.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-  // remove punctuation characters at ends
+  if(s === null || s === undefined) return "";
+  s = String(s).trim().toLowerCase();
+  // Replace common punctuation that shouldn't matter
   s = s.replace(/[.,!;:?]+/g,"");
-  s = s.replace(/\s+/g," ").trim();
+  // Replace German umlaut characters with base forms to make matching more tolerant
+  s = s.replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss");
+  // Remove diacritics (if any)
+  s = s.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+  // Collapse spaces
+  s = s.replace(/\s+/g, " ").trim();
   return s;
 }
 
-/* Navigation: select -> show section */
+/* Show/hide section via dropdown */
 const navSelect = document.getElementById('navSelect');
 const sections = document.querySelectorAll('.section');
-navSelect.addEventListener('change', ()=>{
-  const val = navSelect.value;
-  sections.forEach(s => s.style.display = (s.id === val ? 'block' : 'none'));
-  // scroll to top of section
-  const el = document.getElementById(val);
+navSelect.addEventListener('change', ()=> {
+  const id = navSelect.value;
+  sections.forEach(s => s.style.display = (s.id === id ? 'block' : 'none'));
+  // scroll into view for better UX on mobile
+  const el = document.getElementById(id);
   if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
 });
 
-/* Check logic for each section */
-document.querySelectorAll('button[data-action="check"]').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    const target = btn.dataset.target;
-    const container = document.getElementById(target);
-    const inputs = container.querySelectorAll('input[type="text"]');
-    const feedback = document.getElementById(target + '-feedback');
-    feedback.innerHTML = "";
-    let allCorrect = true;
-    inputs.forEach((inp, idx) => {
+/* Attach validation handlers to all inputs */
+function attachValidation() {
+  const inputs = document.querySelectorAll('input.inp');
+  inputs.forEach(inp => {
+    // on input: live check, but only mark as correct if matches exactly (normalized)
+    inp.addEventListener('input', () => validateField(inp));
+    // on blur: also validate
+    inp.addEventListener('blur', () => validateField(inp));
+    // prevent Enter key from submitting form / jumping
+    inp.addEventListener('keydown', e => { if(e.key === 'Enter') e.preventDefault(); });
+  });
+}
+
+/* Validate a single input element */
+function validateField(inp){
+  const sol = inp.dataset.solution || "";
+  const val = inp.value || "";
+  const nSol = normalizeText(sol);
+  const nVal = normalizeText(val);
+
+  // if both are empty -> reset
+  if(nVal === ""){
+    inp.classList.remove('correct','wrong');
+    // hide title for accessibility
+    inp.removeAttribute('title');
+    return false;
+  }
+
+  if(nVal === nSol){
+    inp.classList.add('correct');
+    inp.classList.remove('wrong');
+    inp.setAttribute('title','Richtig');
+    return true;
+  } else {
+    inp.classList.add('wrong');
+    inp.classList.remove('correct');
+    inp.setAttribute('title','Falsch');
+    return false;
+  }
+}
+
+/* Check all fields in a table and show feedback */
+function checkTable(tableId){
+  const table = document.getElementById(tableId);
+  if(!table) return;
+  const inputs = table.querySelectorAll('input.inp');
+  const feedbackEl = document.getElementById(tableId + '-feedback') || document.getElementById(tableId.replace('-table','') + '-feedback');
+  if(feedbackEl) feedbackEl.innerHTML = "";
+  let allCorrect = true;
+  inputs.forEach(inp => {
+    const ok = validateField(inp);
+    const row = inp.closest('tr');
+    // build message
+    const p = document.createElement('div');
+    if(ok){
+      p.textContent = `✓ ${row.children[1].innerText.trim()}`;
+      p.className = 'correct';
+    } else {
+      allCorrect = false;
       const sol = inp.dataset.solution || "";
-      const user = inp.value || "";
-      const solN = normalizeText(sol);
-      const userN = normalizeText(user);
-      const p = document.createElement('div');
-      if(userN === solN){
-        p.textContent = `✓ ${inp.placeholder}`;
-        p.className = 'correct';
-      } else {
-        allCorrect = false;
-        p.textContent = `✗ ${inp.placeholder} → Lösung: ${sol}`;
-        p.className = 'wrong';
-      }
-      feedback.appendChild(p);
-    });
-    feedback.style.display = 'block';
-    feedback.className = 'feedback ' + (allCorrect ? 'ok' : 'bad');
-    // smooth scroll to feedback
-    feedback.scrollIntoView({behavior:'smooth', block:'center'});
+      p.textContent = `✗ ${row.children[1].innerText.trim()} → Lösung: ${sol}`;
+      p.className = 'wrong';
+    }
+    if(feedbackEl) feedbackEl.appendChild(p);
+  });
+  if(feedbackEl){
+    feedbackEl.style.display = 'block';
+    feedbackEl.className = 'feedback ' + (allCorrect ? 'ok' : 'bad');
+    feedbackEl.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+
+/* Show solutions for a table (reveal solution column) */
+function showSolutions(tableId){
+  const table = document.getElementById(tableId);
+  if(!table) return;
+  // reveal solution cells
+  const sols = table.querySelectorAll('td.solution');
+  sols.forEach(td => td.style.display = 'table-cell');
+}
+
+/* Hide solutions for a table */
+function hideSolutions(tableId){
+  const table = document.getElementById(tableId);
+  if(!table) return;
+  const sols = table.querySelectorAll('td.solution');
+  sols.forEach(td => td.style.display = 'none');
+}
+
+/* Wire buttons */
+document.querySelectorAll('button[data-action="check"]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.target;
+    checkTable(target);
+  });
+});
+document.querySelectorAll('button[data-action="show"]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.target;
+    showSolutions(target);
+    // populate feedback area with solution list too
+    const table = document.getElementById(target);
+    const feedback = document.getElementById(target.replace('-table','') + '-feedback');
+    if(feedback){
+      feedback.innerHTML = '';
+      const solList = document.createElement('div');
+      solList.className = 'sol-list';
+      const rows = table.querySelectorAll('tbody tr');
+      rows.forEach((r, i) => {
+        const sol = r.querySelector('td.solution').innerText.trim();
+        const p = document.createElement('div');
+        p.textContent = `${i+1}. ${sol}`;
+        solList.appendChild(p);
+      });
+      feedback.appendChild(solList);
+      feedback.style.display = 'block';
+      feedback.className = 'feedback ok';
+      feedback.scrollIntoView({behavior:'smooth', block:'center'});
+    }
   });
 });
 
-/* Show individual solutions button */
-document.querySelectorAll('button[data-action="show"]').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    const target = btn.dataset.target;
-    const container = document.getElementById(target);
-    const inputs = container.querySelectorAll('input[type="text"]');
-    const feedback = document.getElementById(target + '-feedback');
-    feedback.innerHTML = "";
-    const solList = document.createElement('div');
-    solList.className = 'sol-list';
-    inputs.forEach((inp, idx) => {
-      const sol = inp.dataset.solution || "";
-      const p = document.createElement('div');
-      p.textContent = `${idx+1}. ${sol}`;
-      solList.appendChild(p);
-    });
-    feedback.appendChild(solList);
-    feedback.style.display = 'block';
-    feedback.className = 'feedback ok';
-    feedback.scrollIntoView({behavior:'smooth', block:'center'});
-  });
-});
-
-/* Global "Alle Lösungen" toggle (show solutions of visible section) */
-const showAllBtn = document.getElementById('showAllSol');
-showAllBtn.addEventListener('click', ()=>{
-  // find visible section
-  const visible = Array.from(sections).find(s => s.style.display !== 'none' && s.style.display !== '');
+/* "Alle Lösungen" top button: shows solutions for visible section table(s) */
+document.getElementById('showAllSol').addEventListener('click', ()=> {
+  // find visible section (display != none)
+  const visible = Array.from(sections).find(s => window.getComputedStyle(s).display !== 'none');
   if(!visible) return;
-  const target = visible.id;
-  const showBtn = document.querySelector(`button[data-action="show"][data-target="${target}"]`);
+  // find tables inside and show solutions
+  const tables = visible.querySelectorAll('table.t');
+  tables.forEach(t => showSolutions(t.id));
+  // also call show button if present
+  const showBtn = visible.querySelector('button[data-action="show"]');
   if(showBtn) showBtn.click();
 });
 
-/* keyboard-friendly: enter in input does nothing special (avoid submit) */
-document.querySelectorAll('input[type="text"]').forEach(i=>{
-  i.addEventListener('keydown', (e)=>{
-    if(e.key === 'Enter') e.preventDefault();
+/* initialize: attach validation and hide all solutions */
+function init(){
+  attachValidation();
+  // hide all solution columns at start
+  const allTables = document.querySelectorAll('table.t');
+  allTables.forEach(tbl => {
+    const sols = tbl.querySelectorAll('td.solution, th.solution');
+    sols.forEach(td => td.style.display = 'none');
   });
-});
+  // expose ids for feedback elements mapping if any missing
+  // (we already used ids like t1-table -> t1-feedback etc.)
+}
+init();
 
-/* initial: show first section */
-sections.forEach(s => s.style.display = (s.id === 'tempus1' ? 'block' : 'none'));
+/* Accessibility: when switching section via keyboard select, focus first input */
+navSelect.addEventListener('change', () => {
+  const id = navSelect.value;
+  const section = document.getElementById(id);
+  if(section){
+    const firstInput = section.querySelector('input.inp');
+    if(firstInput) firstInput.focus({preventScroll:true});
+  }
+});
 </script>
 </body>
 </html>
