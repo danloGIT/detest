@@ -3,136 +3,146 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Übung: Tempus & Konjunktiv I / Indirekte Rede — 7. Klasse</title>
+<title>Übung: Tempus & Konjunktiv I</title>
 <style>
-  body{font-family:"Arial",sans-serif; margin:0; padding:0; background:#eee; color:#111;}
-  .container{max-width:900px; margin:20px auto; padding:15px;}
-  h1{color:#2b7ed3;}
-  h2{color:#2ea063;}
-  h3{color:#2b7ed3;}
-  .card{background:#fffefa; padding:12px; border-radius:6px; border:1px solid #ccc; margin-bottom:14px;}
-  table{border-collapse:collapse; width:100%; margin:6px 0;}
-  table, th, td{border:1px solid #bbb;}
-  th, td{padding:6px 8px; text-align:left;}
-  .answerspace{display:block; margin:6px 0; border-bottom:1px dotted #888; min-height:24px;}
-  ol.tasks{padding-left:18px;}
-  li{margin:8px 0;}
-  .page{page-break-after:always; padding:6px;}
-  @media print{body{background:white;} .page{page-break-after:always;}}
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f0f2f5; color:#111;}
+  header { background:#2b7ed3; color:white; padding:12px; position:sticky; top:0; z-index:100; }
+  header h1 { margin:0; font-size:18px; }
+  nav { margin-top:6px; }
+  nav button { margin:2px; padding:6px 10px; border:none; border-radius:4px; background:#fff; color:#2b7ed3; cursor:pointer; font-weight:600; }
+  nav button.active { background:#2ea063; color:white; }
+  .container { max-width:900px; margin:12px auto; padding:0 12px; }
+  section { display:none; background:#fffefa; padding:12px; border-radius:6px; border:1px solid #ccc; margin-bottom:16px; }
+  section.active { display:block; }
+  h2 { color:#2ea063; }
+  h3 { color:#2b7ed3; }
+  table { border-collapse: collapse; width:100%; margin:8px 0; }
+  table, th, td { border:1px solid #bbb; }
+  th, td { padding:6px 8px; text-align:left; }
+  .task { margin:10px 0; }
+  .task label { display:block; margin-bottom:4px; font-weight:600; }
+  input[type=text] { width:100%; padding:6px 8px; border-radius:4px; border:1px solid #aaa; margin-bottom:8px; box-sizing:border-box; }
+  @media (max-width:600px) {
+    header h1{font-size:16px;}
+    nav button{padding:5px 8px;font-size:13px;}
+  }
 </style>
 </head>
 <body>
+
+<header>
+  <h1>Übung: Tempus & Konjunktiv I / Indirekte Rede</h1>
+  <nav>
+    <button class="tab-btn active" data-tab="tempus1">Tempus 1</button>
+    <button class="tab-btn" data-tab="tempus2">Tempus 2</button>
+    <button class="tab-btn" data-tab="konj1">Konjunktiv I</button>
+    <button class="tab-btn" data-tab="konj2">Konjunktiv II</button>
+  </nav>
+</header>
+
 <div class="container">
 
-  <!-- Page 1 -->
-  <div class="page">
-    <h1>Übung: Tempus — Die Zeitformen</h1>
-    <div class="card">
-      <h2>Wiederholung</h2>
-      <p>Das <strong>Tempus</strong> zeigt, wann eine Handlung stattfindet.</p>
-      <table>
-        <tr><th>Tempus</th><th>Beispiel</th><th>Verwendung</th></tr>
-        <tr><td>Präsens</td><td>Ich spiele.</td><td>Jetzt / regelmäßig</td></tr>
-        <tr><td>Präteritum</td><td>Ich spielte.</td><td>Vergangenheit / Erzählungen</td></tr>
-        <tr><td>Perfekt</td><td>Ich habe gespielt.</td><td>Vergangenheit mit Bezug zur Gegenwart</td></tr>
-        <tr><td>Plusquamperfekt</td><td>Ich hatte gespielt.</td><td>Vorvergangenheit</td></tr>
-        <tr><td>Futur I</td><td>Ich werde spielen.</td><td>Zukunft / Vermutung</td></tr>
-        <tr><td>Futur II</td><td>Ich werde gespielt haben.</td><td>Abgeschlossene Handlung in Zukunft</td></tr>
-      </table>
+  <section id="tempus1" class="active">
+    <h2>Tempus – Wiederholung</h2>
+    <p>Das <strong>Tempus</strong> zeigt an, wann eine Handlung stattfindet.</p>
+    <table>
+      <tr><th>Tempus</th><th>Beispiel</th><th>Verwendung</th></tr>
+      <tr><td>Präsens</td><td>Ich spiele.</td><td>Jetzt / regelmäßig</td></tr>
+      <tr><td>Präteritum</td><td>Ich spielte.</td><td>Vergangenheit / Erzählungen</td></tr>
+      <tr><td>Perfekt</td><td>Ich habe gespielt.</td><td>Vergangenheit mit Bezug zur Gegenwart</td></tr>
+      <tr><td>Plusquamperfekt</td><td>Ich hatte gespielt.</td><td>Vorvergangenheit</td></tr>
+      <tr><td>Futur I</td><td>Ich werde spielen.</td><td>Zukunft / Vermutung</td></tr>
+      <tr><td>Futur II</td><td>Ich werde gespielt haben.</td><td>Abgeschlossene Handlung in Zukunft</td></tr>
+    </table>
+
+    <div class="task">
+      <label>Übung 1: Bestimme das Tempus</label>
+      <input type="text" placeholder="1. Peter liest ein spannendes Buch">
+      <input type="text" placeholder="2. Wir hatten schon gegessen, als er kam">
+      <input type="text" placeholder="3. Morgen werde ich ins Kino gehen">
+      <input type="text" placeholder="4. Sie hat den Ball gefangen">
+      <input type="text" placeholder="5. Früher spielte ich oft im Park">
+    </div>
+  </section>
+
+  <section id="tempus2">
+    <h2>Tempus – Anwendung</h2>
+    <div class="task">
+      <label>Übung 2: Setze in die verlangte Zeitform</label>
+      <input type="text" placeholder="1. (Präsens → Perfekt) Er spielt Fußball">
+      <input type="text" placeholder="2. (Präsens → Präteritum) Wir essen Pizza">
+      <input type="text" placeholder="3. (Präteritum → Plusquamperfekt) Sie rief ihre Freundin an">
+      <input type="text" placeholder="4. (Präsens → Futur I) Ich fahre morgen nach Berlin">
+      <input type="text" placeholder="5. (Perfekt → Präsens) Ihr habt gut gearbeitet">
     </div>
 
-    <div class="card">
-      <h3>Übung 1: Zeitformen bestimmen</h3>
-      <ol class="tasks">
-        <li>Peter liest ein spannendes Buch.<span class="answerspace"></span></li>
-        <li>Wir hatten schon gegessen, als er kam.<span class="answerspace"></span></li>
-        <li>Morgen werde ich ins Kino gehen.<span class="answerspace"></span></li>
-        <li>Sie hat den Ball gefangen.<span class="answerspace"></span></li>
-        <li>Früher spielte ich oft im Park.<span class="answerspace"></span></li>
-      </ol>
+    <div class="task">
+      <label>Übung 3: Erzählzeiten erkennen</label>
+      <p>Gestern ging ich mit meiner Schwester spazieren. Wir haben lange geredet und werden morgen wieder zusammen gehen.</p>
+      <input type="text" placeholder="Gefundene Zeiten">
+      <input type="text" placeholder="Begründung / Erläuterung">
     </div>
-  </div>
+  </section>
 
-  <!-- Page 2 -->
-  <div class="page">
-    <div class="card">
-      <h3>Übung 2: Setze in die verlangte Zeitform</h3>
-      <p>Beispiel: Ich gehe → Ich ging (Präteritum)</p>
-      <ol class="tasks">
-        <li>(Präsens → Perfekt) Er spielt Fußball.<span class="answerspace"></span></li>
-        <li>(Präsens → Präteritum) Wir essen Pizza.<span class="answerspace"></span></li>
-        <li>(Präteritum → Plusquamperfekt) Sie rief ihre Freundin an.<span class="answerspace"></span></li>
-        <li>(Präsens → Futur I) Ich fahre morgen nach Berlin.<span class="answerspace"></span></li>
-        <li>(Perfekt → Präsens) Ihr habt gut gearbeitet.<span class="answerspace"></span></li>
-      </ol>
+  <section id="konj1">
+    <h2>Konjunktiv I / Indirekte Rede</h2>
+    <p>Der <strong>Konjunktiv I</strong> wird genutzt, um indirekte Rede wiederzugeben.</p>
+    <table>
+      <tr><th>Person</th><th>Indikativ</th><th>Konjunktiv I</th></tr>
+      <tr><td>ich</td><td>sage</td><td>sage</td></tr>
+      <tr><td>du</td><td>sagst</td><td>sagest</td></tr>
+      <tr><td>er/sie/es</td><td>sagt</td><td>sage</td></tr>
+      <tr><td>wir</td><td>sagen</td><td>sagen</td></tr>
+      <tr><td>ihr</td><td>sagt</td><td>saget</td></tr>
+      <tr><td>sie</td><td>sagen</td><td>sagen</td></tr>
+    </table>
+
+    <div class="task">
+      <label>Übung 1: Direkte Rede → Indirekte Rede</label>
+      <input type="text" placeholder="1. Maria sagt: 'Ich gehe morgen schwimmen.'">
+      <input type="text" placeholder="2. Paul meint: 'Wir haben das Spiel gewonnen.'">
+      <input type="text" placeholder="3. Der Lehrer erklärt: 'Ihr schreibt morgen den Test.'">
+      <input type="text" placeholder="4. Anna ruft: 'Ich komme gleich!'">
+      <input type="text" placeholder="5. Der Junge sagt: 'Meine Freunde warten schon.'">
     </div>
+  </section>
 
-    <div class="card">
-      <h3>Übung 3: Erzählzeiten erkennen</h3>
-      <p>Markiere die Zeiten im Text:</p>
-      <blockquote>Gestern ging ich mit meiner Schwester spazieren. Wir haben lange geredet und werden morgen wieder zusammen gehen.</blockquote>
-      <span class="answerspace"></span>
-      <span class="answerspace"></span>
-    </div>
-  </div>
-
-  <!-- Page 3 -->
-  <div class="page">
-    <div class="card">
-      <h1>Konjunktiv I / Indirekte Rede</h1>
-      <h2>Merkregel</h2>
-      <p>Der <strong>Konjunktiv I</strong> wird benutzt, um indirekte Rede wiederzugeben.</p>
-      <table>
-        <tr><th>Person</th><th>Indikativ</th><th>Konjunktiv I</th></tr>
-        <tr><td>ich</td><td>sage</td><td>sage</td></tr>
-        <tr><td>du</td><td>sagst</td><td>sagest</td></tr>
-        <tr><td>er/sie/es</td><td>sagt</td><td>sage</td></tr>
-        <tr><td>wir</td><td>sagen</td><td>sagen</td></tr>
-        <tr><td>ihr</td><td>sagt</td><td>saget</td></tr>
-        <tr><td>sie</td><td>sagen</td><td>sagen</td></tr>
-      </table>
+  <section id="konj2">
+    <h2>Konjunktiv I – Vertiefung</h2>
+    <div class="task">
+      <label>Übung 2: Konjunktiv-I-Formen bilden</label>
+      <input type="text" placeholder="gehen →">
+      <input type="text" placeholder="machen →">
+      <input type="text" placeholder="wissen →">
+      <input type="text" placeholder="sein →">
+      <input type="text" placeholder="haben →">
+      <input type="text" placeholder="kommen →">
     </div>
 
-    <div class="card">
-      <h3>Übung 1: Direkte → indirekte Rede</h3>
-      <ol class="tasks">
-        <li>Maria sagt: „Ich gehe morgen schwimmen.“<span class="answerspace"></span></li>
-        <li>Paul meint: „Wir haben das Spiel gewonnen.“<span class="answerspace"></span></li>
-        <li>Der Lehrer erklärt: „Ihr schreibt morgen den Test.“<span class="answerspace"></span></li>
-        <li>Anna ruft: „Ich komme gleich!“<span class="answerspace"></span></li>
-        <li>Der Junge sagt: „Meine Freunde warten schon.“<span class="answerspace"></span></li>
-      </ol>
+    <div class="task">
+      <label>Übung 3: Kurzer Text — indirekte Rede</label>
+      <p>„Lena sagt: 'Ich habe heute keine Hausaufgaben.' Max meint: 'Wir treffen uns später im Park.' Der Lehrer erklärt: 'Ihr dürft die Aufgaben auch morgen abgeben.'“</p>
+      <input type="text" placeholder="Indirekte Rede Lena">
+      <input type="text" placeholder="Indirekte Rede Max">
+      <input type="text" placeholder="Indirekte Rede Lehrer">
     </div>
-  </div>
-
-  <!-- Page 4 -->
-  <div class="page">
-    <div class="card">
-      <h3>Übung 2: Konjunktiv I Formen bilden</h3>
-      <ol class="tasks">
-        <li>gehen → <span class="answerspace"></span></li>
-        <li>machen → <span class="answerspace"></span></li>
-        <li>wissen → <span class="answerspace"></span></li>
-        <li>sein → <span class="answerspace"></span></li>
-        <li>haben → <span class="answerspace"></span></li>
-        <li>kommen → <span class="answerspace"></span></li>
-      </ol>
-    </div>
-
-    <div class="card">
-      <h3>Übung 3: Kurzer Text — indirekte Rede</h3>
-      <p>Schreibe den Text in indirekter Rede:</p>
-      <blockquote>
-        „Lena sagt: ‚Ich habe heute keine Hausaufgaben.‘<br>
-        Max meint: ‚Wir treffen uns später im Park.‘<br>
-        Der Lehrer erklärt: ‚Ihr dürft die Aufgaben auch morgen abgeben.‘“
-      </blockquote>
-      <span class="answerspace"></span>
-      <span class="answerspace"></span>
-      <span class="answerspace"></span>
-    </div>
-  </div>
+  </section>
 
 </div>
+
+<script>
+  const buttons = document.querySelectorAll('.tab-btn');
+  const sections = document.querySelectorAll('section');
+  buttons.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      buttons.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      sections.forEach(s=>s.classList.remove('active'));
+      document.getElementById(tab).classList.add('active');
+    });
+  });
+</script>
+
 </body>
 </html>
